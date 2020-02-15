@@ -4,82 +4,22 @@ def input_students
   #create an empty array
   students = []
   #get the first name
-  name = gets.chomp
-  puts "Is #{name} correct? Y/N"
-  user_input = gets.chomp
-  if user_input == "N"
-    "Type again"
-    name = gets.chomp
-  end
-  cohort = gets.chomp
-  puts "Is #{cohort} correct? Y/N"
-  user_input = gets.chomp
-  if user_input == "N"
-    "Type again"
-    cohort = gets.chomp
-  end
-  height = gets.chomp
-  puts "Is #{height} correct? Y/N"
-  user_input = gets.chomp
-  if user_input == "N"
-    "Type again"
-    height = gets.chomp
-  end
-  country = gets.chomp
-  puts "Is #{country} correct? Y/N"
-  user_input = gets.chomp
-  if user_input == "N"
-    "Type again"
-    country = gets.chomp
-  end
-  hobbies = gets.chomp
-  puts "Is #{hobbies} correct? Y/N"
-  user_input = gets.chomp
-  if user_input == "N"
-    "Type again"
-    hobbies = gets.chomp
-  end
+  name = gets.chop
+  cohort = gets.chop
+  height = gets.chop
+  country = gets.chop
+  hobbies = gets.chop
   #while the name is not empty repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: cohort, height: height, country: country, hobbies: hobbies}
     puts "Now we have #{students.count} students"
     # get another name from the user
-    name = gets.chomp
-    puts "Is #{name} correct? Y/N"
-    user_input = gets.chomp
-    if user_input == "N"
-      "Type again"
-      name = gets.chomp
-    end
-    cohort = gets.chomp
-    puts "Is #{cohort} correct? Y/N"
-    user_input = gets.chomp
-    if user_input == "N"
-      "Type again"
-      cohort = gets.chomp
-    end
-    height = gets.chomp
-    puts "Is #{height} correct? Y/N"
-    user_input = gets.chomp
-    if user_input == "N"
-      "Type again"
-      height = gets.chomp
-    end
-    country = gets.chomp
-    puts "Is #{country} correct? Y/N"
-    user_input = gets.chomp
-    if user_input == "N"
-      "Type again"
-      country = gets.chomp
-    end
-    hobbies = gets.chomp
-    puts "Is #{hobbies} correct? Y/N"
-    user_input = gets.chomp
-    if user_input == "N"
-      "Type again"
-      hobbies = gets.chomp
-    end
+    name = gets.chop
+    cohort = gets.chop
+    height = gets.chop
+    country = gets.chop
+    hobbies = gets.chop
   end
   # return the array of students
   students
@@ -90,17 +30,6 @@ def print_header
 end
 def print(students)
   students.each do |student|
-    if student[:name].empty?
-      student[:name] = "N/A".to_sym
-    elsif student[:cohort].empty?
-      student[:cohort] = "N/A".to_sym
-    elsif student[:height].empty?
-      student[:height] = "N/A".to_sym
-    elsif student[:country].empty?
-      student[:country] = "N/A".to_sym
-    elsif student[:hobbies].empty?
-      student[:hobbies] = "N/A".to_sym
-    end
     puts "#{student[:name]}, #{student[:cohort]}, #{student[:height]}, #{student[:country]}, #{student[:hobbies]}"
   end
 end
