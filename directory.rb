@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] #an empty array accessible to all methods
 
 def print_menu 
@@ -26,8 +28,12 @@ def process(selection)
     show_students
   when "3"
     save_students
+    puts "Students saved successfully!"
   when "4"
-    load_students
+    puts "Give filename to load (ignore .csv):"
+    input_file = gets.chomp + ".csv"
+    load_students(input_file)
+    puts "Students loaded successfully!"
   when "9"
     exit #this will cause the program to terminate"
   else
@@ -72,23 +78,22 @@ end
 
 def save_students
   #open the file for writing
-  file = File.open("students.csv", "w")
-  #iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  puts "Give filename to save (ignore .csv):"
+  input_file = gets.chomp+".csv"
+  CSV.open(input_file, "w") do |csv|
+    @students.each do |student|
+      csv << [student[:name], student[:cohort]]
+    end
   end
-  file.close
+  puts "Filename: " + input_file
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
+def load_students(filename)
+  CSV.foreach(filename) do |row|
+    name = row[0]
+    cohort = row[1]
     students_append(name, cohort.to_sym)
   end
-  file.close
 end
 
 def students_append(name, cohort)
@@ -96,11 +101,17 @@ def students_append(name, cohort)
   
 end
 
+def get_filename
+    filename = ARGV.first #first argument from the command line
+  if filename.nil? # get out of the method if it isn't given
+    filename = 'students.csv'
+  end
+end
+
 def try_load_students
-  filename = ARGV.first #first argument from the command line
-  return if filename.nil? # get out of the method if it isn't given
+  filename = get_filename
   if File.exists?(filename) #if it exists
-    load_students(filename)
+    load_students('students.csv')
     puts "Loaded #{@students.count} from #{filename}"
   else #if it doesn't exist
     puts "Sorry, #{filename} doesn't exist."
@@ -108,5 +119,14 @@ def try_load_students
   end
 end
 
+# def print_file
+#   File.open($0, "r") do |file|
+#     file.readlines.each do |line|
+#       puts line
+#     end
+#   end
+# end
+
+# print_file
 try_load_students
 interactive_menu
